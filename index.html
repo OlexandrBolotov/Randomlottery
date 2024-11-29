@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лотерейний квиток</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Parkinsans:wght@300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Parkinsans:wght@300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Great+Vibes&family=Parkinsans:wght@300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Yeseva+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Загальні стилі */
+      body {
+        font-family: "Great Vibes", sans-serif;
+        background: linear-gradient(to bottom, #000000, #282828);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .ticket {
+        background: #fff;
+        width: 300px;
+        max-width: 90%;
+        padding: 20px;
+        border: 3px solid #5d0303;
+        background-image: url(./image/fon.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        border-radius: 10px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+      }
+      /* .ticket::before,
+      .ticket::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 10px;
+        background: repeating-linear-gradient(
+          45deg,
+          #4caf50,
+          #4caf50 10px,
+          #fff 10px,
+          #fff 20px
+        );
+        top: -15px;
+        left: 0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      } */
+      .ticket::after {
+        top: auto;
+        bottom: -15px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+      .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        background: linear-gradient(
+          90deg,
+          #ffea00,
+          #e1c01b,
+          #895432,
+          #e8ff4f,
+          #ff9a9e
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gradient-text 3s infinite linear;
+      }
+      @keyframes gradient-text {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+      .title-sun {
+        font-size: 3rem;
+      }
+
+      .number {
+        font-family: "Bitter", Times, serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ffd60b;
+        margin: 20px 0;
+        min-height: 60px; /* Щоб елемент не змінював висоту під час анімації */
+      }
+      .button {
+        font-family: "Great Vibes", Courier, monospace;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        padding: 10px 20px;
+        background-color: #5e0000;
+        color: #ffd60b;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .button:hover {
+        background-color: #9c0505;
+      }
+
+      /* Адаптивність */
+      @media (max-width: 480px) {
+        .ticket {
+          width: 90%;
+          padding: 15px;
+        }
+        .title {
+          font-size: 1.2rem;
+        }
+        .number {
+          font-size: 2rem;
+        }
+        .button {
+          font-size: 0.9rem;
+          padding: 8px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ticket">
+      <div class="title">Лотерейний квиток</div>
+      <div class="title">для</div>
+      <div class="title title-sun">Сонечка</div>
+      <div id="randomNumber" class="number">--</div>
+      <button class="button" onclick="generateRandomNumber()">Сюрприз:)</button>
+    </div>
+
+    <script>
+      // Масив доступних чисел
+      const numbers = [
+        25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 200,
+      ];
+
+      // Функція для прокручування чисел
+      function generateRandomNumber() {
+        const numberElement = document.getElementById("randomNumber");
+
+        // Тривалість анімації (в мілісекундах)
+        const animationDuration = 5000;
+        const intervalTime = 80; // Інтервал між змінами чисел
+
+        let currentIndex = 0; // Індекс для поточного числа
+        let interval = setInterval(() => {
+          // Прокручування чисел
+          currentIndex = (currentIndex + 1) % numbers.length;
+          numberElement.textContent = numbers[currentIndex];
+        }, intervalTime);
+
+        // Зупинка на випадковому числі після закінчення анімації
+        setTimeout(() => {
+          clearInterval(interval); // Зупинити прокручування
+          const randomNumber =
+            numbers[Math.floor(Math.random() * numbers.length)];
+          numberElement.textContent = randomNumber; // Відобразити фінальне число
+        }, animationDuration);
+      }
+    </script>
+  </body>
+</html>
